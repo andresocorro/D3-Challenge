@@ -44,7 +44,7 @@ function yScale(censusData, chosenYAxis){
 }
 
 // function used for updating xAxis var upon click on axis label
-function renderAxes(newXScale, xAxis) {
+function renderXAxes(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
   
     xAxis.transition()
@@ -274,18 +274,73 @@ var yLabelsGroup = chartGroup.append("g")
         if (xValue !== chosenXAxis){
 
             // replace chosenxaxis with value clicked upon clicking
-            chosenXAxis = xValue
+            chosenXAxis = xValue;
 
             // Update scaling to reflect new chosen data
             // updating xScale
-            xLinearScale = xScale(censusData, chosenXAxis)
+            xLinearScale = xScale(censusData, chosenXAxis);
 
+            // update xaxis with the transition
+            xAxis = renderXAxes(xLinearScale, xAxis);
+
+            // Update Circles with new values
+            circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+            // update tool tips with new data
+            circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+            // change bold txt in active axis
+            xLabelsGroup.selectAll("text")
+                .classed("inactive", true)
+                .classed("active", false);
+
+            var labelMap = {
+                income: incomeLabel,
+                age: ageLabel,
+                poverty: povertyLabel
+            }
+
+            labelMap[chosenXAxis].classed("active", true)
+                                 .classed("inactive", false);
         }
 
-        })
+        });
 
+    // Y-Axis Event Listender
+    yLabelsGroup.selectAll("text")
+    .on("click", function(){
+    var yValue = d3.select(this).attr("value");
+    if (yValue !== chosenYAxis){
 
+        // replace chosenxaxis with value clicked upon clicking
+        chosenYAxis = yValue;
 
+        // Update scaling to reflect new chosen data
+        // updating xScale
+        yLinearScale = yScale(censusData, chosenYAxis);
+
+        // update xaxis with the transition
+        yAxis = renderYAxes(yLinearScale, yAxis);
+
+        // Update Circles with new values
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+        // update tool tips with new data
+        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+        // change bold txt in active axis
+        xLabelsGroup.selectAll("text")
+            .classed("inactive", true)
+            .classed("active", false);
+
+        var labelMap = {
+            obesity: obesityLabel,
+            smokes: smokesLabel,
+            healthcare: healthcareLabel
+        }
+
+        labelMap[chosenYAxis].classed("active", true)
+                             .classed("inactive", false);
+    }
 }).catch(function(error){
     console.log(error);
-});
