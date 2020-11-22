@@ -208,6 +208,81 @@ d3.csv("assets/data/data.csv").then(function(censusData){
         .text(d => d.abbr);
 
 // create group for all 3 x-axis labels
+    var xLabelsGroup = chartGroup.append("g")
+                   .attr("transform", `translate(${chartWidth /2}, ${chartHeight + 20})`);
+
+    var ageLabel = xLabelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 25)
+        .attr("value", "age")
+        .classed("active", true)
+        .text("Age (Median)");
+
+    var incomeLabel = xLabelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 50)
+        .attr("value", "income")
+        .classed("inactive", true)
+        .text("Household Income (Median)");
+
+    var povertyLabel = xLabelsGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 75)
+        .attr("value", "poverty")
+        .classed("inactive", true)
+        .text("In Poverty(%)");
+
+// create group for all 3 y-axis labels
+
+var yLabelsGroup = chartGroup.append("g")
+                .attr("transform", `translate(${-margin.left}, ${chartHeight / 2}) rotate(-90)`);
+        
+    var obesityLabel = yLabelsGroup.append("text")
+        .attr("y", 5)
+        .attr("x", 0)
+        .attr("dy", "1em")
+        .attr("value", "obesity")
+        .classed("axis-text", true)
+        .classed("active", true)
+        .text("Obese (%)");
+        
+    var smokesLabel = yLabelsGroup.append("text")
+        .attr("y", 30)
+        .attr("x", 0)
+        .attr("dy", "1em")
+        .attr("value", "smokes")
+        .classed("axis-text", true)
+        .classed("inactive", true)
+        .text("Smoke (%)");
+        
+    var healthcareLabel = yLabelsGroup.append("text")
+        .attr("y", 55)
+        .attr("x", 0)
+        .attr("dy", "1em")
+        .attr("value", "healthcare")
+        .classed("axis-text", true)
+        .classed("inactive", true)
+        .text("Lack Healthcare (%)");
+
+    // update tooltip
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+    // X-Axis Event Listener
+    xLabelsGroup.selectAll("text")
+        .on("click", function(){
+        var xValue = d3.select(this).attr("value");
+        if (xValue !== chosenXAxis){
+
+            // replace chosenxaxis with value clicked upon clicking
+            chosenXAxis = xValue
+
+            // Update scaling to reflect new chosen data
+            // updating xScale
+            xLinearScale = xScale(censusData, chosenXAxis)
+
+        }
+
+        })
 
 
 
