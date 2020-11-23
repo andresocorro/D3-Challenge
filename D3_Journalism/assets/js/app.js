@@ -106,7 +106,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         var yLabel = "% Smokes";
     }
   
-    else {
+    else if (chosenYAxis === "healthcare"){
         var yLabel = "% Lacking Healthcare";
     }
   
@@ -329,7 +329,7 @@ var yLabelsGroup = chartGroup.append("g")
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
         // change bold txt in active axis
-        xLabelsGroup.selectAll("text")
+        yLabelsGroup.selectAll("text")
             .classed("inactive", true)
             .classed("active", false);
 
@@ -342,5 +342,9 @@ var yLabelsGroup = chartGroup.append("g")
         labelMap[chosenYAxis].classed("active", true)
                              .classed("inactive", false);
     }
+
+        });
+
 }).catch(function(error){
     console.log(error);
+});
