@@ -1,7 +1,7 @@
 //  Set up chart
 
 var svgWidth = 800;
-var svgHeight =  500;
+var svgHeight =  600;
 
 var margin = {
     top: 40,
@@ -10,8 +10,20 @@ var margin = {
     left: 100
 };
 
+console.log("it works")
+
 var chartWidth = svgWidth - margin.left - margin.right;
 var chartHeight = svgHeight - margin.top - margin.bottom;
+
+// Create SVG wrapperm append a SVG Group that will hold our chart. Shift it by the left and top margins
+
+var svg = d3.select('#scatter')
+            .append("svg")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight);
+
+var chartGroup = svg.append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`)
 
 // Initial Parameters
 var chosenXAxis = "age";
@@ -130,27 +142,16 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     return circlesGroup;
   }
 
-
-// Create SVG wrapperm append a SVG Group that will hold our chart. Shift it by the left and top margins
-
-var svg = d3.select('#scatter')
-            .append("svg")
-            .attr("width", svgWidth)
-            .attr("height", svgHeight);
-
-var chartGroup = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`)
-
 d3.csv("assets/data/data.csv").then(function(censusData){
 
     // parse thru data
     censusData.forEach(function(data){
-        data.poverty = +data.poverty;
-        data.healthcate = +data.healthcare;
-        data.age = +data.age;
-        data.smokes = +data.smokes;
+        data.poverty = parseFloat(data.poverty);
+        data.healthcate = parseFloat(data.healthcare);
+        data.age = parseFloat(data.age);
+        data.smokes = parseFloat(data.smokes);
         data.income = +data.income;
-        data.obesity = data.obesity;
+        data.obesity = parseFloat(data.obesity);
 
 
     });
