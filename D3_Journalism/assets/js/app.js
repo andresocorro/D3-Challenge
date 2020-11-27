@@ -118,7 +118,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         var yLabel = "% Smokes";
     }
   
-    else if (chosenYAxis === "healthcare"){
+    else  {
         var yLabel = "% Lacking Healthcare";
     }
   
@@ -193,7 +193,7 @@ d3.csv("assets/data/data.csv").then(function(censusData){
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
         .attr("r", "15")
         .attr("opacity", "0.75")
-        .attr("fill","lightblue")
+        .attr("fill","gray")
         .classed("stateCircle", true);
 
         circlesGroup.append("text")
@@ -204,7 +204,7 @@ d3.csv("assets/data/data.csv").then(function(censusData){
         .attr("text-anchor", "middle")
         .style("font-size",1.5)
         .style("fill", "white")
-        .style("font", "10px sans-serif")
+        .style("font", "10px arial")
         .style("font-weight", "bold")
         .text(d => d.abbr);
 
@@ -314,7 +314,7 @@ var yLabelsGroup = chartGroup.append("g")
     if (yValue !== chosenYAxis){
 
         // replace chosenxaxis with value clicked upon clicking
-        chosenYAxis = yValue;
+        chosenYAxis = yValue
 
         // Update scaling to reflect new chosen data
         // updating xScale
