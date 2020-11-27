@@ -6,4 +6,4 @@ We were provided with data from the 2014 ACS 1-year estimates from the [US Censu
 
  After analyzing the data we were able to build an interactive scatter plot that analyzes the relationship amongst this different factors. Specifically the relation that either age, household income and poverty have with obesity, smoke %, and the lack of healthcare
 
-![plot](D3_journalism/assets/images/screenshot.PNG)
+![plot](D3_Journalism/assets/images/screenshot.PNG)
